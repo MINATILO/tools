@@ -43,12 +43,3 @@ def normalise_finishing_positions(positions):
     n = len(m)
     R = 0.5 * (n**2 + n) / np.sum(m)
     return m * R
-
-
-if __name__ == '__main__':
-    positions = np.array([2., 1.7, 1.1])
-    positions = normalise_finishing_positions(positions)
-    p = pos2prob(positions)
-
-    assert np.allclose(np.sum(p, axis=0), 1.)
-    assert np.allclose(np.sum(p, axis=1), 1.)
