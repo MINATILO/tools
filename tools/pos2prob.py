@@ -38,7 +38,7 @@ def _cvx_solve(X, m, n):
     return p
 
 
-def normalise_finishing_positions(positions):
+def normalise_rank(positions):
     m = positions - np.min(positions) + 1
     n = len(m)
     R = 0.5 * (n**2 + n) / np.sum(m)
