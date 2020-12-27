@@ -3,4 +3,4 @@
 
 ### Content:
 - `pos2prob.py`: transform predicted rankings of arbituary number of players
-  into a valid doubly stochastic inferred position matrix
+  into a valid doubly stochastic inferred position matrix, where the expected rank of each player equals to the predicted ranks
