@@ -9,13 +9,13 @@ def pos2prob(positions):
     a = np.arange(n) + 1
     b = np.ones(n)
 
-    A = np.kron(np.eye(n), a)
-    B = np.kron(np.eye(n), b)
-    C = np.block([np.eye(n)]*n)
+    M1 = np.kron(np.eye(n), a)
+    M2 = np.kron(np.eye(n), b)
+    M3 = np.block([np.eye(n)]*n)
 
-    X = np.concatenate([A, B, C])
-    m = np.concatenate([positions, np.ones(2*n)])
-    p = _cvx_solve(X, m, n)
+    M = np.concatenate([M1, M2, M3])
+    target = np.concatenate([positions, np.ones(2*n)])
+    p = _cvx_solve(M, target, n)
     return p
 
 
@@ -28,9 +28,9 @@ def check_positions_are_normalised(positions):
     assert min(positions) >= 1 and max(positions) <= n, msg2
 
 
-def _cvx_solve(X, m, n):
+def _cvx_solve(M, target, n):
     p = cp.Variable(n**2)
-    objective = cp.Minimize(cp.sum_squares(X@p - m))
+    objective = cp.Minimize(cp.sum_squares(M@p - target))
     constraints = [0 <= p, p <= 1]
     prob = cp.Problem(objective, constraints)
     prob.solve()
