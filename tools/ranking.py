@@ -40,3 +40,15 @@ def normalise_rank(ranks):
     n = len(m)
     R = 0.5 * (n**2 + n) / np.sum(m)
     return m * R
+
+
+def form_position_score_matrix(max_runners):
+    out = np.ones((max_runners, max_runners)) * np.nan
+    for i in range(max_runners):
+        num_runners = max_runners - i
+        x = np.arange(1, num_runners + 1)
+        y = (num_runners - 2 * x + max_runners) / (2 * (max_runners - 1)) + 0.5
+        # y = (num_runners - 2 * x + max_runners) / (2 * (max_runners - 1)) + 0.5
+        # y = y * (num_runners + 1) / 2
+        out[i, max_runners-num_runners:] = y
+    return out
