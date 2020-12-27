@@ -26,6 +26,13 @@ def test_pos2prob_outputs_doubly_stochastic_matrix():
     assert np.allclose(np.sum(p, axis=1), 1.)
 
 
+def test_pos2prob_outputs_sums_to_expected_positions():
+    expected_positions = np.array([2., 1., 3.])
+    p = pos2prob(expected_positions)
+    positions = np.vstack([[1, 2, 3]] * 3)
+    assert np.allclose(np.sum(p * positions, axis=1), expected_positions)
+
+
 def test_normalise_finishing_positions():
     unnormalised_positions = np.array([2., 1.7, 1.1])
     out = normalise_finishing_positions(unnormalised_positions)
