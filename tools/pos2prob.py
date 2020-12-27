@@ -6,14 +6,11 @@ def pos2prob(positions):
     check_positions_are_normalised(positions)
     n = len(positions)
 
-    a = np.arange(n) + 1
-    b = np.ones(n)
-
-    M1 = np.kron(np.eye(n), a)
-    M2 = np.kron(np.eye(n), b)
+    M1 = np.kron(np.eye(n), np.arange(n) + 1)
+    M2 = np.kron(np.eye(n), np.ones(n))
     M3 = np.block([np.eye(n)]*n)
-
     M = np.concatenate([M1, M2, M3])
+
     target = np.concatenate([positions, np.ones(2*n)])
     p = _cvx_solve(M, target, n)
     return p
