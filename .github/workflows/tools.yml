@@ -20,6 +20,6 @@ jobs:
         pip install -r requirements.txt
     - name: Test with pytest
       run: |
-        export HOME_DIR=/home/runner/work/tools/src
+        export HOME_DIR=/home/runner/work/tools/tools
         export PYTHONPATH=$PYTHONPATH:/$HOME_DIR
         pytest -v test
