@@ -3,6 +3,7 @@ import pytest
 
 from tools.ranking import check_ranks_are_normalised
 from tools.ranking import ranks2prob, normalise_rank
+from tools.ranking import form_position_score_matrix
 
 
 def test_check_ranks_are_normalised_raises_on_unnormalised_input():
@@ -39,3 +40,11 @@ def test_normalise_rank():
     check_ranks_are_normalised(out)
     assert np.allclose(out.sum(), 6)
     assert min(out) >= 1 and max(out) <= 3
+
+
+def test_form_position_score_matrix():
+    max_runners = 100
+    out = form_position_score_matrix(max_runners)
+    assert np.allclose(np.nansum(out, axis=1), np.arange(100, 0, -1))
+    assert ((out[1:, :] > out[:-1, :])[np.triu_indices(99)]).all
+    assert ((out[:, :-1] > out[:, 1:])[np.triu_indices(99)]).all
